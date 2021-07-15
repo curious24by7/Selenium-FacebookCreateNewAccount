@@ -3,12 +3,13 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.Select;
+
 import java.io.File;
 import java.io.IOException;
 
 public class scripts {
     public static void main(String[] args) throws InterruptedException, IOException {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\soham\\selenium jars and drivers\\drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\soham\\selenium jars and drivers\\drivers\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://en-gb.facebook.com/");
@@ -37,11 +38,17 @@ public class scripts {
         driver.findElement(By.xpath("//body[1]/div[3]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[7]/span[1]/span[2]/input[1]")).click();
         scripts.CaptureScreenShot(driver);
         driver.findElement(By.xpath("//body[1]/div[3]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[10]/button[1]")).click();
+        Thread.sleep(19000);
+        WebElement warning = driver.findElement(By.xpath("//*[@id=\"reg_error_inner\"]"));
+        System.out.println("Notice: " + warning.getText());
+        Thread.sleep(2000);
+        driver.quit();
     }
+
     public static void CaptureScreenShot(WebDriver driver) throws IOException {
-        TakesScreenshot takesScreenshot = ((TakesScreenshot)driver);
+        TakesScreenshot takesScreenshot = ((TakesScreenshot) driver);
         File SourceFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
-        File destinationFile = new File("./screenshots/" +"facebook-register-"+ System.currentTimeMillis() + ".png");
+        File destinationFile = new File("./screenshots/" + "facebook-register-" + System.currentTimeMillis() + ".png");
         //FileUtils.copyFile(SourceFile, destinationFile);
         FileHandler.copy(SourceFile, destinationFile);
     }
